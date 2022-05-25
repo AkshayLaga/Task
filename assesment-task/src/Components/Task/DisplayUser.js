@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { selectUser } from "./TableSlice";
 import "./User.css"
 const DisplayUser = () => {
+
     const navigate = useNavigate()
   const user = useSelector(selectUser);
+  const [total,setTotal] = useState()
+  const countTotal = () =>{
+    var total = 0
+    user.map((item)=>(total += parseInt(item.salary)))
+    setTotal(total)
+  }
+  useEffect(()=>{
+    countTotal()
+  },[])
 //   console.log(user);
 const Back = () =>{
     navigate("/")
@@ -41,12 +51,8 @@ const Back = () =>{
               <tr>
               <td>Total:</td>
               <td></td>
-              <td>{
-               
-               user && user.reduce((a, v) => a + v, 0)
-
-                  }</td>
-
+              <td>&#8377;{total}
+              </td>
                </tr>
            </tfoot>
         
